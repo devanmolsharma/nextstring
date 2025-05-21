@@ -19,3 +19,5 @@ for (const key of Object.keys(extensions)) {
 export function initialise(provider: Provider) {
   ProviderManager.setProvider(provider);
 }
+
+export * from "./providers";
