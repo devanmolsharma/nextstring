@@ -16,7 +16,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extensions = void 0;
 const dummyExtension_1 = require("./dummyExtension");
+const summarise_1 = require("./summarise");
 __exportStar(require("./extension"), exports);
 exports.extensions = {
     [dummyExtension_1.DummyExtension.functionName]: dummyExtension_1.DummyExtension.handle,
+    [summarise_1.Summarise.functionName]: summarise_1.Summarise.handle,
 };

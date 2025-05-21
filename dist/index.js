@@ -21,7 +21,8 @@ const provider_manager_1 = require("./providers/provider.manager");
 for (const key of Object.keys(extensions_1.extensions)) {
     // @ts-ignore
     String.prototype[key] = function (...args) {
-        return extensions_1.extensions[key].apply(this);
+        // @ts-ignore
+        return extensions_1.extensions[key].apply(this, args);
     };
 }
 function initialise(provider) {
