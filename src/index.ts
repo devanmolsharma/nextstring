@@ -12,7 +12,8 @@ declare global {
 for (const key of Object.keys(extensions)) {
   // @ts-ignore
   String.prototype[key] = function (...args: any[]) {
-    return extensions[key as keyof typeof extensions].apply(this);
+    // @ts-ignore
+    return extensions[key as keyof typeof extensions].apply(this, args);
   };
 }
 
