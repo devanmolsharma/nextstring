@@ -6,5 +6,5 @@ declare global {
     }
 }
 export declare function initialise(provider: Provider): void;
-export {};
+export * from "./providers";
 //# sourceMappingURL=index.d.ts.map
