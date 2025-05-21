@@ -1,0 +1,15 @@
+{
+  "name": "smartstring",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "openai": "^4.101.0",
+    "typescript": "^5.8.3"
+  }
+}
