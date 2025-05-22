@@ -1,3 +1,4 @@
+import { OpenaiProvider } from "providers";
 import { extensions } from "./extensions";
 import { Provider } from "./providers/provider";
 type ExtentionsType = typeof extensions;
@@ -6,5 +7,9 @@ declare global {
     }
 }
 export declare function initialise(provider: Provider): void;
-export * from "./providers";
+declare const _default: {
+    initialise: typeof initialise;
+    OpenaiProvider: typeof OpenaiProvider;
+};
+export default _default;
 //# sourceMappingURL=index.d.ts.map
