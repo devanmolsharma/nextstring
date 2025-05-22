@@ -1,6 +1,6 @@
-# SmartString
+# nextstring
 
-SmartString is a powerful TypeScript library that extends the native `String` prototype with AI-driven capabilities. It allows developers to perform advanced operations on strings, such as extracting data, answering questions, summarizing text, and checking conditions, all powered by a configurable AI provider.
+nextstring is a powerful TypeScript library that extends the native `String` prototype with AI-driven capabilities. It allows developers to perform advanced operations on strings, such as extracting data, answering questions, summarizing text, and checking conditions, all powered by a configurable AI provider.
 
 ## Features
 
@@ -12,7 +12,7 @@ SmartString is a powerful TypeScript library that extends the native `String` pr
 ## Installation
 
 ```bash
-npm install smartstring
+npm install nextstring
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ npm install smartstring
 Before using the library, initialize it with an AI provider:
 
 ```typescript
-import { initialise, OpenaiProvider } from "smartstring";
+import { initialise, OpenaiProvider } from "nextstring";
 
 const provider = new OpenaiProvider({apiKey: "your-api-key"});
 initialise(provider);
@@ -77,7 +77,7 @@ console.log(isSunny);
 
 ## Impact on AI Coding
 
-SmartString simplifies the integration of AI capabilities into your applications by abstracting complex AI interactions into intuitive string methods. This allows developers to:
+nextstring simplifies the integration of AI capabilities into your applications by abstracting complex AI interactions into intuitive string methods. This allows developers to:
 
 - Focus on building features rather than implementing AI logic.
 - Leverage AI for natural language processing tasks with minimal effort.
@@ -85,7 +85,7 @@ SmartString simplifies the integration of AI capabilities into your applications
 
 ## Sample Scenario: AI-Powered Customer Support
 
-Imagine you're building a customer support chatbot. With SmartString, you can easily extract key information from user messages, answer their questions, and summarize lengthy responses.
+Imagine you're building a customer support chatbot. With nextstring, you can easily extract key information from user messages, answer their questions, and summarize lengthy responses.
 
 ```typescript
 const userMessage = "Hi, my name is Alice. My order ID is 12345, and I need help with a refund.";

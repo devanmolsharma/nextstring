@@ -1,9 +1,9 @@
 {
-  "name": "smartstring",
+  "name": "nextstring",
   "version": "1.0.0",
   "main": "dist/index.js",
   "bin": {
-    "smartstring": "dist/index.js"
+    "nextstring": "dist/index.js"
   },
   "type": "module",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/devanmolsharma/smartString.git"
+    "url": "https://github.com/devanmolsharma/nextstring.git"
   },
   "author": "Anmol Sharma",
   "license": "ISC",
