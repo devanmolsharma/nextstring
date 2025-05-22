@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProviderManager = void 0;
-class ProviderManager {
+export class ProviderManager {
     static setProvider(provider) {
         this.currentProvider = provider;
     }
@@ -12,5 +9,5 @@ class ProviderManager {
         return this.currentProvider;
     }
 }
-exports.ProviderManager = ProviderManager;
 ProviderManager.currentProvider = null;
+//# sourceMappingURL=provider.manager.js.map

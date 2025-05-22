@@ -1,21 +1,15 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.initialise = initialise;
-const providers_1 = require("providers");
-const extensions_1 = require("./extensions");
-const provider_manager_1 = require("./providers/provider.manager");
+import { extensions } from "./extensions";
+import { ProviderManager } from "./providers/provider.manager";
 // Extend the String prototype with the extensions
-for (const key of Object.keys(extensions_1.extensions)) {
+for (const key of Object.keys(extensions)) {
     // @ts-ignore
     String.prototype[key] = function (...args) {
         // @ts-ignore
-        return extensions_1.extensions[key].apply(this, args);
+        return extensions[key].apply(this, args);
     };
 }
-function initialise(provider) {
-    provider_manager_1.ProviderManager.setProvider(provider);
+export function initialise(provider) {
+    ProviderManager.setProvider(provider);
 }
-exports.default = {
-    initialise,
-    OpenaiProvider: providers_1.OpenaiProvider,
-};
+export * from "./providers";
+//# sourceMappingURL=index.js.map
