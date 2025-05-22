@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2020", // Modern JS output
-    "module": "ESNext", // Use "CommonJS" if targeting Node
+    "module": "CommonJS", // Use "CommonJS" if targeting Node
     "declaration": true, // Emit .d.ts files
     "declarationMap": true, // Optional: sourcemaps for .d.ts
     "sourceMap": true, // Generate .js.map files
