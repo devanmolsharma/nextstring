@@ -1,2 +1,2 @@
-export * from "./extensions";
+export * from "./providers";
 export * from "./main";
