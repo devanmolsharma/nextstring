@@ -7,4 +7,8 @@ declare global {
     }
 }
 declare function initialise(provider: Provider): void;
-export { OpenaiProvider, initialise };
+declare const _default: {
+    OpenaiProvider: typeof OpenaiProvider;
+    initialise: typeof initialise;
+};
+export default _default;

@@ -22,4 +22,4 @@ function initialise(provider: Provider) {
   ProviderManager.setProvider(provider);
 }
 
-export { OpenaiProvider, initialise };
+export default { OpenaiProvider, initialise };
