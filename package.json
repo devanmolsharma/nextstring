@@ -11,7 +11,11 @@
     "prepare": "husky",
     "build": "tsc "
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devanmolsharma/smartString.git"
+  },
+  "author": "Anmol Sharma",
   "license": "ISC",
   "description": "",
   "dependencies": {
