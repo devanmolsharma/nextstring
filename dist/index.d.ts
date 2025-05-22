@@ -1,4 +1,4 @@
-import { OpenaiProvider } from "providers";
+import { OpenaiProvider } from "./providers";
 import { extensions } from "./extensions";
 import { Provider } from "./providers/provider";
 type ExtentionsType = typeof extensions;

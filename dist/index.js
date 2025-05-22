@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const providers_1 = require("providers");
+const providers_1 = require("./providers");
 const extensions_1 = require("./extensions");
 const provider_manager_1 = require("./providers/provider.manager");
 // Extend the String prototype with the extensions
