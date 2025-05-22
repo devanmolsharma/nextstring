@@ -4,4 +4,3 @@ export declare class ProviderManager {
     static setProvider(provider: Provider): void;
     static getProvider(): Provider;
 }
-//# sourceMappingURL=provider.manager.d.ts.map

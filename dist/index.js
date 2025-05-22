@@ -15,23 +15,12 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initialise = initialise;
-var extensions_1 = require("./extensions");
-var provider_manager_1 = require("./providers/provider.manager");
-var _loop_1 = function (key) {
-    // @ts-ignore
-    String.prototype[key] = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        // @ts-ignore
+const extensions_1 = require("./extensions");
+const provider_manager_1 = require("./providers/provider.manager");
+for (const key of Object.keys(extensions_1.extensions)) {
+    String.prototype[key] = function (...args) {
         return extensions_1.extensions[key].apply(this, args);
     };
-};
-// Extend the String prototype with the extensions
-for (var _i = 0, _a = Object.keys(extensions_1.extensions); _i < _a.length; _i++) {
-    var key = _a[_i];
-    _loop_1(key);
 }
 function initialise(provider) {
     provider_manager_1.ProviderManager.setProvider(provider);

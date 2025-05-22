@@ -9,4 +9,3 @@ export declare const extensions: {
     readonly checkIf: typeof CheckIf.handle;
     readonly extractData: typeof ExtractData.handle;
 };
-//# sourceMappingURL=index.d.ts.map
