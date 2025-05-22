@@ -1,3 +1,4 @@
+import { OpenaiProvider } from "providers";
 import { extensions } from "./extensions";
 import { Provider } from "./providers/provider";
 import { ProviderManager } from "./providers/provider.manager";
@@ -17,8 +18,8 @@ for (const key of Object.keys(extensions)) {
   };
 }
 
-export function initialise(provider: Provider) {
+function initialise(provider: Provider) {
   ProviderManager.setProvider(provider);
 }
 
-export * from "./providers";
+export { OpenaiProvider, initialise };

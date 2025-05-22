@@ -4,6 +4,19 @@ exports.CheckIf = void 0;
 const provider_manager_1 = require("../providers/provider.manager");
 const extension_1 = require("./extension");
 class CheckIf extends extension_1.Extension {
+    /**
+     * Checks if the given condition is true based on the provided data.
+     * @param query - The condition to be checked.
+     * @returns A boolean indicating whether the condition is true or false.
+     * @throws Error if the provider is not set or if the condition checking fails.
+     * @example
+     * ```ts
+     * const data = "This is some data that can be used to check conditions.";
+     * const condition = "Is the data about something?";
+     * const result = await data.checkIf(condition);
+     * console.log(result); // true or false
+     * ```
+     */
     static async handle(query) {
         const data = this;
         const provider = provider_manager_1.ProviderManager.getProvider();

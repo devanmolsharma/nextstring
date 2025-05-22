@@ -4,6 +4,22 @@ exports.ExtractData = void 0;
 const provider_manager_1 = require("../providers/provider.manager");
 const extension_1 = require("./extension");
 class ExtractData extends extension_1.Extension {
+    /**
+     * Extracts specific data based on the provided list of items and their descriptions.
+     * @param items - An array of objects containing `name` and `description` of the data to extract.
+     * @returns An object with the extracted data.
+     * @throws Error if the provider is not set or if the extraction fails.
+     * @example
+     * ```ts
+     * const data = "This is some data containing various details.";
+     * const items = [
+     *   { name: "email", description: "The email address in the data" },
+     *   { name: "phone", description: "The phone number in the data" }
+     * ];
+     * const result = await data.extractData(items);
+     * console.log(result); // { email: "example@example.com", phone: "123-456-7890" }
+     * ```
+     */
     static async handle(items) {
         const data = this;
         const provider = provider_manager_1.ProviderManager.getProvider();
