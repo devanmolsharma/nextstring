@@ -22,14 +22,23 @@ export class OpenaiProvider implements Provider {
   private openai: OpenAI;
   private model: string;
 
+  /**
+   * Creates an instance of the OpenaiProvider.
+   *
+   * @param params - Configuration parameters for the OpenAI API.
+   * @param model - The model to use for chat completions (default: "gpt-4o-mini").
+   * @param globalPrompt - A global prompt to prepend to all requests (optional).
+   */
   constructor(
     params: {
       apiKey: string;
       baseURL?: string;
       organization?: string;
+
       [key: string]: any;
     },
-    model: string = "gpt-4o-mini"
+    model: string = "gpt-4o-mini",
+    private globalPrompt: string = ""
   ) {
     this.openai = new OpenAI({
       ...params,
@@ -41,6 +50,16 @@ export class OpenaiProvider implements Provider {
     systemPrompt: string,
     userPrompt: string
   ): Promise<string> {
+    const messages: {
+      role: "system" | "user" | "assistant";
+      content: string;
+    }[] = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userPrompt },
+    ];
+    if (this.globalPrompt) {
+      messages.unshift({ role: "system", content: this.globalPrompt });
+    }
     const response = await this.openai.chat.completions.create({
       model: this.model,
       messages: [
@@ -58,12 +77,19 @@ export class OpenaiProvider implements Provider {
     systemPrompt: string,
     userPrompt: string
   ): Promise<any> {
+    const messages: {
+      role: "system" | "user" | "assistant";
+      content: string;
+    }[] = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userPrompt },
+    ];
+    if (this.globalPrompt) {
+      messages.unshift({ role: "system", content: this.globalPrompt });
+    }
     const response = await this.openai.chat.completions.create({
       model: this.model,
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt },
-      ],
+      messages: messages,
       response_format: { type: "json_object" },
     });
     const message = response.choices[0].message;

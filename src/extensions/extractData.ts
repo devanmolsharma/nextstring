@@ -34,10 +34,12 @@ export class ExtractData extends Extension {
             ${query}
             Only use the data provided and return the answer in JSON format with the following structure:
             {
-                "name1": "value1",
-                "name2": "value2",
-                ...
-            }`,
+              "name1": "value1",
+              "name2": "value2",
+              ...
+              }
+              if the data is not present, return an empty string for that field    
+              `,
       data
     );
 

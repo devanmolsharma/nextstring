@@ -85,6 +85,31 @@ console.log(translatedText);
 // Output: "Hola, ¿cómo estás?"
 ```
 
+#### 6. Rewriting Text
+
+```typescript
+const data = "This is some original text.";
+const instructions = "Rewrite this to be more formal.";
+
+const rewritten = await data.rewrite(instructions);
+console.log(rewritten); 
+// Output: "This is some original text rewritten formally."
+```
+
+#### 7. Classifying Text
+
+```typescript
+const text = "This is a message about a technical issue.";
+const categories = [
+    { name: "support", description: "Messages related to customer support" },
+    { name: "sales", description: "Messages related to sales inquiries" }
+];
+
+const result = await text.classifyText(categories);
+console.log(result); 
+// Output: "support"
+```
+
 ## Impact on AI Coding
 
 nextstring simplifies the integration of AI capabilities into your applications by abstracting complex AI interactions into intuitive string methods. This allows developers to:
