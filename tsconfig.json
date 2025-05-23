@@ -11,7 +11,8 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "esModuleInterop": true
   },
   "include": ["src/**/*"],
   "exclude": ["test/**/*.spec.ts", "node_modules", "dist"]

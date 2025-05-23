@@ -1,1 +1,0 @@
-{"version":3,"file":"extractData.d.ts","sourceRoot":"","sources":["../../src/extensions/extractData.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,SAAS,EAAE,MAAM,aAAa,CAAC;AAExC,qBAAa,WAAY,SAAQ,SAAS;IACxC,MAAM,CAAC,YAAY,EAAG,aAAa,CAAU;IAE7C;;;;;;;;;;;;;;;OAeG;WACU,MAAM,CAAC,KAAK,EAAE;QAAE,IAAI,EAAE,MAAM,CAAC;QAAC,WAAW,EAAE,MAAM,CAAA;KAAE,EAAE;CAyBnE"}
