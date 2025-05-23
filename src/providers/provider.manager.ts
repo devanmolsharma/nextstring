@@ -1,4 +1,4 @@
-import { Provider } from "./provider.js";
+import { Provider } from "./provider";
 
 export class ProviderManager {
   private static currentProvider: Provider | null = null;

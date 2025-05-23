@@ -1,5 +1,5 @@
 import { OpenAI } from "openai";
-import { Provider } from "./provider.js";
+import { Provider } from "./provider";
 
 /**
  * Provides an implementation of the `Provider` interface using the OpenAI API.

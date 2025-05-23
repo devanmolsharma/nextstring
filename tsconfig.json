@@ -1,18 +1,13 @@
 {
   "compilerOptions": {
-    "module": "Node16",
+    "target": "ES2017",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
     "declaration": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
-    "outDir": "./dist/",
-    "baseUrl": "./src",
-    "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false,
-    "esModuleInterop": true
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["test/**/*.spec.ts", "node_modules", "dist"]
+  "include": ["src"]
 }

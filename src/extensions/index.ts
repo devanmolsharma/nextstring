@@ -1,9 +1,9 @@
-import { CheckIf } from "./checkIf.js";
-import { ExtractData } from "./extractData.js";
-import { Question } from "./question.js";
-import { Summarise } from "./summarise.js";
+import { CheckIf } from "./checkIf";
+import { ExtractData } from "./extractData";
+import { Question } from "./question";
+import { Summarise } from "./summarise";
 
-export * from "./extension.js";
+export * from "./extension";
 
 export const extensions = {
   [Summarise.functionName]: Summarise.handle,

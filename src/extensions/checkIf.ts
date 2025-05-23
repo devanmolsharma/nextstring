@@ -1,5 +1,5 @@
-import { ProviderManager } from "../providers/provider.manager.js";
-import { Extension } from "./extension.js";
+import { ProviderManager } from "../providers/provider.manager";
+import { Extension } from "./extension";
 
 export class CheckIf extends Extension {
   static functionName = "checkIf" as const;
