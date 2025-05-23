@@ -1,18 +1,19 @@
 {
   "name": "nextstring",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky",
-    "build": "npm run clean && tsc",
+    "build": "npm run clean && tsup --format cjs,esm ./src/index.ts --dts --sourcemap --minify --clean",
     "clean": "rimraf dist"
   },
   "repository": {
@@ -23,9 +24,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "husky": "^9.1.7",
     "openai": "^4.101.0",
-    "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.0"
   }
 }
