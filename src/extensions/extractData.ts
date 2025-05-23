@@ -20,7 +20,9 @@ export class ExtractData extends Extension {
    * console.log(result); // { email: "example@example.com", phone: "123-456-7890" }
    * ```
    */
-  static async handle(items: { name: string; description: string }[]) {
+  static async handle<T extends string>(
+    items: { name: T; description: string }[]
+  ): Promise<Record<T, string>> {
     const data = this as any as string;
     const provider = ProviderManager.getProvider();
     const query = items

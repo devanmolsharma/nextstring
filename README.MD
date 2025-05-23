@@ -1,6 +1,6 @@
 # nextstring
 
-nextstring is a powerful TypeScript library that extends the native `String` prototype with AI-driven capabilities. It allows developers to perform advanced operations on strings, such as extracting data, answering questions, summarizing text, and checking conditions, all powered by a configurable AI provider.
+nextstring is a powerful TypeScript library that extends the native `String` prototype with AI-driven capabilities. It allows developers to perform advanced operations on strings, such as extracting data, answering questions, summarizing text, checking conditions, and translating text, all powered by a configurable AI provider.
 
 ## Features
 
@@ -8,6 +8,7 @@ nextstring is a powerful TypeScript library that extends the native `String` pro
 - **Answer Questions**: Answer questions using the context of the string.
 - **Summarize**: Summarize text to a specified number of words.
 - **Check Conditions**: Evaluate conditions based on the string's content.
+- **Translate**: Translate text into a specified language.
 
 ## Installation
 
@@ -75,6 +76,15 @@ console.log(isSunny);
 // Output: true
 ```
 
+#### 5. Translating Text
+
+```typescript
+const text = "Hello, how are you?";
+const translatedText = await text.translate("spanish");
+console.log(translatedText); 
+// Output: "Hola, ¿cómo estás?"
+```
+
 ## Impact on AI Coding
 
 nextstring simplifies the integration of AI capabilities into your applications by abstracting complex AI interactions into intuitive string methods. This allows developers to:
@@ -85,7 +95,7 @@ nextstring simplifies the integration of AI capabilities into your applications 
 
 ## Sample Scenario: AI-Powered Customer Support
 
-Imagine you're building a customer support chatbot. With nextstring, you can easily extract key information from user messages, answer their questions, and summarize lengthy responses.
+Imagine you're building a customer support chatbot. With nextstring, you can easily extract key information from user messages, answer their questions, summarize lengthy responses, and translate messages for multilingual support.
 
 ```typescript
 const userMessage = "Hi, my name is Alice. My order ID is 12345, and I need help with a refund.";
@@ -102,6 +112,10 @@ const question = "What does the user need help with?";
 const userNeed = await userMessage.question(question);
 console.log(userNeed); 
 // Output: "a refund"
+
+const translatedMessage = await userMessage.translate("spanish");
+console.log(translatedMessage);
+// Output: "Hola, mi nombre es Alice. Mi ID de pedido es 12345 y necesito ayuda con un reembolso."
 ```
 
 With just a few lines of code, you can build a robust AI-powered system to handle customer queries efficiently.
