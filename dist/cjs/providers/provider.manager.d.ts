@@ -1,4 +1,4 @@
-import { Provider } from "./provider";
+import { Provider } from "./provider.js";
 export declare class ProviderManager {
     private static currentProvider;
     static setProvider(provider: Provider): void;

@@ -1,5 +1,5 @@
-import { ProviderManager } from "../providers/provider.manager";
-import { Extension } from "./extension";
+import { ProviderManager } from "../providers/provider.manager.js";
+import { Extension } from "./extension.js";
 
 export class Question extends Extension {
   static functionName = "question" as const;

@@ -1,5 +1,5 @@
-import { extensions } from "./extensions";
-import { Provider } from "./providers/provider";
+import { extensions } from "./extensions/index.js";
+import { Provider } from "./providers/provider.js";
 type ExtentionsType = typeof extensions;
 declare global {
     interface String extends ExtentionsType {

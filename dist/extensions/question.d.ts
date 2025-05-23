@@ -1,4 +1,4 @@
-import { Extension } from "./extension";
+import { Extension } from "./extension.js";
 export declare class Question extends Extension {
     static functionName: "question";
     /**

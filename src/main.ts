@@ -1,6 +1,6 @@
-import { extensions } from "./extensions";
-import { Provider } from "./providers/provider";
-import { ProviderManager } from "./providers/provider.manager";
+import { extensions } from "./extensions/index.js";
+import { Provider } from "./providers/provider.js";
+import { ProviderManager } from "./providers/provider.manager.js";
 
 type ExtentionsType = typeof extensions;
 

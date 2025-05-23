@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Summarise = void 0;
-const provider_manager_1 = require("../providers/provider.manager");
-const extension_1 = require("./extension");
-class Summarise extends extension_1.Extension {
+import { ProviderManager } from "../providers/provider.manager.js";
+import { Extension } from "./extension.js";
+export class Summarise extends Extension {
+    static functionName = "summarise";
     /**
      * Summarises the given text to a specified number of words.
      * @param num_words - The number of words to summarise the text to.
@@ -18,11 +16,9 @@ class Summarise extends extension_1.Extension {
      */
     static async handle(num_words) {
         const data = this;
-        const provider = provider_manager_1.ProviderManager.getProvider();
+        const provider = ProviderManager.getProvider();
         const summary = await provider.getResponseString(`Summarise the following text in ${num_words} words`, data);
         return summary;
     }
 }
-exports.Summarise = Summarise;
-Summarise.functionName = "summarise";
 //# sourceMappingURL=summarise.js.map

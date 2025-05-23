@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.OpenaiProvider = void 0;
-const openai_1 = require("openai");
+import { OpenAI } from "openai";
 /**
  * Provides an implementation of the `Provider` interface using the OpenAI API.
  *
@@ -19,9 +16,11 @@ const openai_1 = require("openai");
  * const response = await provider.getResponseString("You are a helpful assistant.", "Hello!");
  * ```
  */
-class OpenaiProvider {
+export class OpenaiProvider {
+    openai;
+    model;
     constructor(params, model = "gpt-4o-mini") {
-        this.openai = new openai_1.OpenAI({
+        this.openai = new OpenAI({
             ...params,
             baseURL: params.baseURL || "https://api.openai.com/v1",
         });
@@ -62,5 +61,4 @@ class OpenaiProvider {
         throw new Error("No message found in the response");
     }
 }
-exports.OpenaiProvider = OpenaiProvider;
 //# sourceMappingURL=openai.js.map

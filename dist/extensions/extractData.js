@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ExtractData = void 0;
-const provider_manager_1 = require("../providers/provider.manager");
-const extension_1 = require("./extension");
-class ExtractData extends extension_1.Extension {
+import { ProviderManager } from "../providers/provider.manager.js";
+import { Extension } from "./extension.js";
+export class ExtractData extends Extension {
+    static functionName = "extractData";
     /**
      * Extracts specific data based on the provided list of items and their descriptions.
      * @param items - An array of objects containing `name` and `description` of the data to extract.
@@ -22,7 +20,7 @@ class ExtractData extends extension_1.Extension {
      */
     static async handle(items) {
         const data = this;
-        const provider = provider_manager_1.ProviderManager.getProvider();
+        const provider = ProviderManager.getProvider();
         const query = items
             .map((item) => `Extract ${item.name}: ${item.description}`)
             .join("\n");
@@ -40,6 +38,4 @@ class ExtractData extends extension_1.Extension {
         return answer;
     }
 }
-exports.ExtractData = ExtractData;
-ExtractData.functionName = "extractData";
 //# sourceMappingURL=extractData.js.map

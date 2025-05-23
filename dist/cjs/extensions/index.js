@@ -13,17 +13,18 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extensions = void 0;
-const checkIf_1 = require("./checkIf");
-const extractData_1 = require("./extractData");
-const question_1 = require("./question");
-const summarise_1 = require("./summarise");
-__exportStar(require("./extension"), exports);
-exports.extensions = {
-    [summarise_1.Summarise.functionName]: summarise_1.Summarise.handle,
-    [question_1.Question.functionName]: question_1.Question.handle,
-    [checkIf_1.CheckIf.functionName]: checkIf_1.CheckIf.handle,
-    [extractData_1.ExtractData.functionName]: extractData_1.ExtractData.handle,
-};
+var checkIf_js_1 = require("./checkIf.js");
+var extractData_js_1 = require("./extractData.js");
+var question_js_1 = require("./question.js");
+var summarise_js_1 = require("./summarise.js");
+__exportStar(require("./extension.js"), exports);
+exports.extensions = (_a = {},
+    _a[summarise_js_1.Summarise.functionName] = summarise_js_1.Summarise.handle,
+    _a[question_js_1.Question.functionName] = question_js_1.Question.handle,
+    _a[checkIf_js_1.CheckIf.functionName] = checkIf_js_1.CheckIf.handle,
+    _a[extractData_js_1.ExtractData.functionName] = extractData_js_1.ExtractData.handle,
+    _a);
 //# sourceMappingURL=index.js.map

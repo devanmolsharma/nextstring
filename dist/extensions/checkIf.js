@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CheckIf = void 0;
-const provider_manager_1 = require("../providers/provider.manager");
-const extension_1 = require("./extension");
-class CheckIf extends extension_1.Extension {
+import { ProviderManager } from "../providers/provider.manager.js";
+import { Extension } from "./extension.js";
+export class CheckIf extends Extension {
+    static functionName = "checkIf";
     /**
      * Checks if the given condition is true based on the provided data.
      * @param query - The condition to be checked.
@@ -19,7 +17,7 @@ class CheckIf extends extension_1.Extension {
      */
     static async handle(query) {
         const data = this;
-        const provider = provider_manager_1.ProviderManager.getProvider();
+        const provider = ProviderManager.getProvider();
         const answer = await provider.getResponseJson(`Based on the data user provides, check if this condition is true: ${query}, 
       only use the data provided and return only the answer, nothing else
       return the answer in JSON format with the following structure:
@@ -48,6 +46,4 @@ class CheckIf extends extension_1.Extension {
         throw new Error("Invalid response format");
     }
 }
-exports.CheckIf = CheckIf;
-CheckIf.functionName = "checkIf";
 //# sourceMappingURL=checkIf.js.map

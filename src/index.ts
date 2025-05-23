@@ -1,2 +1,2 @@
-export * from "./providers";
-export * from "./main";
+export * from "./providers/index.js";
+export * from "./main.js";
