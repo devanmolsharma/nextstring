@@ -5,23 +5,24 @@ export class ExtractData extends Extension {
   static functionName = "extractData" as const;
 
   /**
-   * Extracts specific data based on the provided list of items and their descriptions.
-   * @param items - An array of objects containing `name` and `description` of the data to extract.
-   * @returns An object with the extracted data.
-   * @throws Error if the provider is not set or if the extraction fails.
+   * Extracts specific data from the provided text based on the given items.
+   * @param items - An array of objects defining the data to extract.
+   * Each object should have a `name`, `description`, and an optional `default` value.
+   * @returns A promise that resolves to an object containing the extracted data.
+   * The keys are the `name` properties from the items, and the values are the extracted data.
+   * If a piece of data is not found, it will return an empty string or the default value if provided.
+   * @throws Will throw an error if the response format is invalid.
    * @example
-   * ```ts
-   * const data = "This is some data containing various details.";
-   * const items = [
-   *   { name: "email", description: "The email address in the data" },
-   *   { name: "phone", description: "The phone number in the data" }
-   * ];
-   * const result = await data.extractData(items);
-   * console.log(result); // { email: "example@example.com", phone: "123-456-7890" }
+   * ```typescript
+   * const data = await ExtractData.handle([
+   *   { name: "email", description: "User's email address" },
+   *   { name: "phone", description: "User's phone number", default: "N/A" }
+   * ]);
+   * console.log(data); // { email: "user@example.com", phone: "123-456-7890" }
    * ```
    */
   static async handle<T extends string>(
-    items: { name: T; description: string }[]
+    items: { name: T; description: string; default?: string }[]
   ): Promise<Record<T, string>> {
     const data = this as any as string;
     const provider = ProviderManager.getProvider();
@@ -45,6 +46,13 @@ export class ExtractData extends Extension {
 
     if (typeof answer !== "object" || answer === null) {
       throw new Error("Invalid response format");
+    }
+
+    // Ensure all items are present in the answer
+    for (const item of items) {
+      if (!(item.name in answer) || !answer[item.name]) {
+        answer[item.name] = item.default || "";
+      }
     }
 
     return answer;

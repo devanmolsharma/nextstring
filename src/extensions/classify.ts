@@ -35,17 +35,32 @@ export class ClassifyText extends Extension {
     const answer = await provider.getResponseJson(
       `Based on the text provided, classify it into one of the following categories:
                         ${query}
-                        Only use the text provided and return the name of the category as a string.`,
+                        Only use the text provided and return in following json.
+                        {
+                          "category": "name of the category"
+                        }
+                        `,
       text
     );
 
     if (
-      typeof answer !== "string" ||
-      !categories.some((cat) => cat.name === answer)
+      typeof answer !== "object" ||
+      answer === null ||
+      !("category" in answer)
     ) {
-      throw new Error("Invalid response format or category not recognized");
+      throw new Error("Invalid response format");
+    }
+    if (typeof answer.category !== "string") {
+      throw new Error("Category must be a string");
     }
 
-    return answer as T;
+    const category = answer.category as T;
+    if (!categories.some((c) => c.name === category)) {
+      throw new Error(
+        `Category "${category}" is not defined in the provided categories`
+      );
+    }
+
+    return category;
   }
 }
