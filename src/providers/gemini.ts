@@ -1,4 +1,10 @@
-import { GoogleGenAI, Content, Part } from "@google/genai";
+import {
+  GoogleGenAI,
+  Content,
+  GenerateContentConfig,
+  GoogleGenAIOptions,
+  Part,
+} from "@google/genai";
 import { Provider } from "./provider";
 
 /**
@@ -20,12 +26,6 @@ import { Provider } from "./provider";
 export class GeminiProvider implements Provider {
   private gemini: GoogleGenAI;
   private model: string;
-  private config: object = {
-    temperature: 0.1, // Default temperature
-    thinkingConfig: {
-      thinkingBudget: 0, // Non thinking
-    },
-  };
 
   /**
    * Creates an instance of the GeminiProvider.
@@ -35,12 +35,15 @@ export class GeminiProvider implements Provider {
    * @param globalPrompt - A global prompt to prepend to all requests (optional).
    */
   constructor(
-    params: {
-      apiKey: string;
-      [key: string]: any;
-    },
+    params: GoogleGenAIOptions,
     model: string = "gemini-2.5-flash",
-    private globalPrompt: string = ""
+    private globalPrompt: string = "",
+    private config: GenerateContentConfig = {
+      temperature: 0.1, // Default temperature
+      thinkingConfig: {
+        thinkingBudget: 0, // Non thinking
+      },
+    }
   ) {
     this.gemini = new GoogleGenAI({
       ...params,
