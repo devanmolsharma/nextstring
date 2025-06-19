@@ -32,6 +32,7 @@ export class GeminiProvider implements Provider {
    * @param params - Configuration parameters for the Gemini API.
    * @param model - The model to use for chat completions (default: "gemini-2.5-flash").
    * @param globalPrompt - A global prompt to prepend to all requests (optional).
+   * @param config - Configuration for content generation, including temperature and thinking budget (optional).
    */
   constructor(
     params: GoogleGenAIOptions,
