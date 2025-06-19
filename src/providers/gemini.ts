@@ -3,7 +3,6 @@ import {
   Content,
   GenerateContentConfig,
   GoogleGenAIOptions,
-  Part,
 } from "@google/genai";
 import { Provider } from "./provider";
 
@@ -31,7 +30,7 @@ export class GeminiProvider implements Provider {
    * Creates an instance of the GeminiProvider.
    *
    * @param params - Configuration parameters for the Gemini API.
-   * @param model - The model to use for chat completions (default: "gpt-4o-mini").
+   * @param model - The model to use for chat completions (default: "gemini-2.5-flash").
    * @param globalPrompt - A global prompt to prepend to all requests (optional).
    */
   constructor(
