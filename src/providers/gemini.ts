@@ -2,30 +2,35 @@ import { GoogleGenAI, Content, Part } from "@google/genai";
 import { Provider } from "./provider";
 
 /**
- * Provides an implementation of the `Provider` interface using the OpenAI API.
+ * Provides an implementation of the `Provider` interface using the Gemini API.
  *
- * This class allows sending prompts to OpenAI's chat completion endpoint and retrieving responses
+ * This class allows sending prompts to Gemini's chat completion endpoint and retrieving responses
  * as either plain strings or parsed JSON objects.
  *
  * @remarks
  * - Requires an API key for authentication.
- * - Supports specifying a custom base URL and organization.
- * - Defaults to using the "gpt-4o-mini" model unless another is specified.
+ * - Defaults to using the "gemini-2.5-flash" non-thinking model unless another is specified.
  *
  * @example
  * ```typescript
- * const provider = new OpenaiProvider({ apiKey: "sk-..." });
+ * const provider = new GeminiProvider({ apiKey: "AI..." });
  * const response = await provider.getResponseString("You are a helpful assistant.", "Hello!");
  * ```
  */
-export class OpenaiProvider implements Provider {
+export class GeminiProvider implements Provider {
   private gemini: GoogleGenAI;
   private model: string;
+  private config: object = {
+    temperature: 0.1, // Default temperature
+    thinkingConfig: {
+      thinkingBudget: 0, // Non thinking
+    },
+  };
 
   /**
-   * Creates an instance of the OpenaiProvider.
+   * Creates an instance of the GeminiProvider.
    *
-   * @param params - Configuration parameters for the OpenAI API.
+   * @param params - Configuration parameters for the Gemini API.
    * @param model - The model to use for chat completions (default: "gpt-4o-mini").
    * @param globalPrompt - A global prompt to prepend to all requests (optional).
    */
@@ -34,7 +39,7 @@ export class OpenaiProvider implements Provider {
       apiKey: string;
       [key: string]: any;
     },
-    model: string = "gemini-2.5-flash-preview-04-17",
+    model: string = "gemini-2.5-flash",
     private globalPrompt: string = ""
   ) {
     this.gemini = new GoogleGenAI({
@@ -48,7 +53,30 @@ export class OpenaiProvider implements Provider {
     userPrompt: string
   ): Promise<string> {
     const contents: Content[] = [
-      { role: "system", parts: [{ text: systemPrompt }] },
+      { role: "model", parts: [{ text: systemPrompt }] },
+      { role: "user", parts: [{ text: userPrompt }] },
+    ];
+    if (this.globalPrompt) {
+      contents[0]?.parts?.unshift({ text: this.globalPrompt });
+    }
+    const response = await this.gemini.models.generateContent({
+      model: this.model,
+      contents,
+      config: this.config,
+    });
+    const message = response.text;
+    if (message) {
+      return message;
+    }
+    throw new Error("No message found in the response");
+  }
+
+  async getResponseJson(
+    systemPrompt: string,
+    userPrompt: string
+  ): Promise<any> {
+    const contents: Content[] = [
+      { role: "model", parts: [{ text: systemPrompt }] },
       { role: "user", parts: [{ text: userPrompt }] },
     ];
     if (this.globalPrompt) {
@@ -58,22 +86,16 @@ export class OpenaiProvider implements Provider {
       model: this.model,
       contents,
       config: {
-        thinkingConfig: {
-          thinkingBudget: 0, // Non thinking
-        },
+        ...this.config,
+        responseMimeType: "application/json",
       },
     });
+
     const message = response.text;
-    if (message) {
-      return message;
+    if (!message) {
+      throw new Error("No message found in the response");
     }
-    throw new Error("No message found in the response");
-  }
-  async getResponseJson(
-    systemPrompt: string,
-    userPrompt: string
-  ): Promise<any> {
-    const message = await this.getResponseString(systemPrompt, userPrompt);
+    console.log("Response message:", message);
     try {
       return JSON.parse(message);
     } catch (error) {
