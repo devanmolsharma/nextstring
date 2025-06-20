@@ -17,6 +17,17 @@ for (const key of Object.keys(extensions)) {
   };
 }
 
-export function initialise(provider: Provider) {
+export function initialise(
+  provider: Provider,
+  override: boolean = false
+): void {
+  if (!override && ProviderManager.getProvider()) {
+    console.warn(
+      `Provider is already set to ${
+        ProviderManager.getProvider().constructor.name
+      }. Use 'override' option to replace the current provider.`
+    );
+    return;
+  }
   ProviderManager.setProvider(provider);
 }
