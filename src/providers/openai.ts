@@ -71,8 +71,7 @@ export class OpenaiProvider implements Provider {
     if (message && message.content) {
       return message.content;
     }
-    console.warn("No message found in the response");
-    return "";
+    throw new Error("No message found in the response");
   }
   async getResponseJson(
     systemPrompt: string,
@@ -101,7 +100,6 @@ export class OpenaiProvider implements Provider {
         throw new Error("Failed to parse JSON response: " + error);
       }
     }
-    console.warn("No message found in the response");
-    return {};
+    throw new Error("No message found in the response");
   }
 }
