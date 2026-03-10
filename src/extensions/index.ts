@@ -1,5 +1,6 @@
 import { CheckIf } from "./checkIf";
 import { ClassifyText } from "./classify";
+import { DetectLanguage } from "./detectLanguage";
 import { ExtractData } from "./extractData";
 import { Fill } from "./fill";
 import { Generate } from "./generate";
@@ -24,4 +25,5 @@ export const extensions = {
   [Generate.functionName]: Generate.handle,
   [Score.functionName]: Score.handle,
   [Mask.functionName]: Mask.handle,
+  [DetectLanguage.functionName]: DetectLanguage.handle,
 } as const;
