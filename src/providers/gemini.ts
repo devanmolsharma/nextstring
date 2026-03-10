@@ -53,7 +53,8 @@ export class GeminiProvider implements Provider {
 
   async getResponseString(
     systemPrompt: string,
-    userPrompt: string
+    userPrompt: string,
+    model?: string
   ): Promise<string> {
     const contents: Content[] = [
       { role: "model", parts: [{ text: systemPrompt }] },
@@ -63,7 +64,7 @@ export class GeminiProvider implements Provider {
       contents[0]?.parts?.unshift({ text: this.globalPrompt });
     }
     const response = await this.gemini.models.generateContent({
-      model: this.model,
+      model: model || this.model,
       contents,
       config: this.config,
     });
@@ -76,7 +77,8 @@ export class GeminiProvider implements Provider {
 
   async getResponseJson(
     systemPrompt: string,
-    userPrompt: string
+    userPrompt: string,
+    model?: string
   ): Promise<any> {
     const contents: Content[] = [
       { role: "model", parts: [{ text: systemPrompt }] },
@@ -86,7 +88,7 @@ export class GeminiProvider implements Provider {
       contents[0]?.parts?.unshift({ text: this.globalPrompt });
     }
     const response = await this.gemini.models.generateContent({
-      model: this.model,
+      model: model || this.model,
       contents,
       config: {
         ...this.config,

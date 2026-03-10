@@ -1,6 +1,6 @@
 {
   "name": "nextstring",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "type": "module",
   "exports": {
     ".": {
@@ -24,6 +24,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
     "@google/genai": "^1.5.1",
     "openai": "^4.101.0",
     "typescript": "^5.8.3"

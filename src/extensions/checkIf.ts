@@ -1,3 +1,4 @@
+import { ModelOptions } from "../providers/provider";
 import { ProviderManager } from "../providers/provider.manager";
 import { Extension } from "./extension";
 
@@ -7,6 +8,7 @@ export class CheckIf extends Extension {
   /**
    * Checks if the given condition is true based on the provided data.
    * @param query - The condition to be checked.
+   * @param options - Optional model options to override the default model.
    * @returns A boolean indicating whether the condition is true or false.
    * @throws Error if the provider is not set or if the condition checking fails.
    * @example
@@ -17,18 +19,19 @@ export class CheckIf extends Extension {
    * console.log(result); // true or false
    * ```
    */
-  static async handle(query: string) {
+  static async handle(query: string, options?: ModelOptions) {
     const data = this as any as string;
     const provider = ProviderManager.getProvider();
     const answer = await provider.getResponseJson(
-      `Based on the data user provides, check if this condition is true: ${query}, 
+      `Based on the data user provides, check if this condition is true: ${query},
       only use the data provided and return only the answer, nothing else
       return the answer in JSON format with the following structure:
       {
         result: boolean,
       }
       `,
-      data
+      data,
+      options?.model
     );
     if (answer.result === undefined) {
       throw new Error("Invalid response format");

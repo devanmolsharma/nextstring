@@ -1,14 +1,24 @@
 # nextstring
 
-nextstring is a powerful TypeScript library that extends the native `String` prototype with AI-driven capabilities. It allows developers to perform advanced operations on strings, such as extracting data, answering questions, summarizing text, checking conditions, and translating text, all powered by a configurable AI provider.
+nextstring is a powerful TypeScript library that extends the native `String` prototype with AI-driven capabilities. Perform advanced operations on strings — extract data, answer questions, summarize, translate, classify, score, mask sensitive data, and more — all powered by a configurable AI provider.
 
 ## Features
 
-- **Extract Data**: Extract specific information from a string based on descriptions.
-- **Answer Questions**: Answer questions using the context of the string.
-- **Summarize**: Summarize text to a specified number of words.
-- **Check Conditions**: Evaluate conditions based on the string's content.
-- **Translate**: Translate text into a specified language.
+| Method | Description |
+|--------|-------------|
+| `extractData(items)` | Extract structured data from text with optional type parsing |
+| `question(q)` | Answer questions using the string as context |
+| `summarise(words)` | Summarize text to a target word count |
+| `checkIf(condition)` | Evaluate a condition against the string's content |
+| `translate(language)` | Translate text to a target language |
+| `rewrite(instructions)` | Rewrite text following specific instructions |
+| `classifyText(categories)` | Classify text into predefined categories |
+| `fill(context)` | Fill `{{placeholder}}` templates using AI-inferred values |
+| `generate(instructions?)` | Use the string as a prompt to generate content |
+| `score(rubrics)` | Score text against rubrics, returns numeric scores |
+| `mask(rules)` | Partially mask sensitive data (emails, phones, SSNs, etc.) |
+
+All methods accept an optional `{ model: string }` options object as the last parameter to override the default model per call.
 
 ## Installation
 
@@ -16,139 +26,192 @@ nextstring is a powerful TypeScript library that extends the native `String` pro
 npm install nextstring
 ```
 
-## Usage
+## Quick Start
 
-### Initialization
-
-Before using the library, initialize it with an AI provider:
+### 1. Initialize with a provider
 
 ```typescript
 import { initialise, OpenaiProvider } from "nextstring";
 
-const provider = new OpenaiProvider({apiKey: "your-api-key"});
+// OpenAI
+const provider = new OpenaiProvider({ apiKey: "sk-..." });
+initialise(provider);
+
+// or Gemini
+import { GeminiProvider } from "nextstring";
+const provider = new GeminiProvider({ apiKey: "AI..." });
+initialise(provider);
+
+// or Claude
+import { ClaudeProvider } from "nextstring";
+const provider = new ClaudeProvider({ apiKey: "sk-ant-..." });
 initialise(provider);
 ```
 
-### Examples
-
-#### 1. Extracting Data
+### 2. Use AI methods on any string
 
 ```typescript
-const data = "John's email is john.doe@example.com and his phone number is 123-456-7890.";
-const items = [
-    { name: "email", description: "The email address in the data" },
-    { name: "phone", description: "The phone number in the data" },
-];
-
-const result = await data.extractData(items);
-console.log(result); 
-// Output: { email: "john.doe@example.com", phone: "123-456-7890" }
+const answer = await "The Eiffel Tower is in Paris.".question("Where is the Eiffel Tower?");
+// "Paris"
 ```
 
-#### 2. Answering Questions
+## Providers
+
+| Provider | Default Model | Import |
+|----------|--------------|--------|
+| **OpenAI** | `gpt-4o-mini` | `OpenaiProvider` |
+| **Google Gemini** | `gemini-2.5-flash` | `GeminiProvider` |
+| **Anthropic Claude** | `claude-sonnet-4-20250514` | `ClaudeProvider` |
+
+Each provider accepts a `globalPrompt` parameter to prepend instructions to every request.
 
 ```typescript
-const text = "The Eiffel Tower is located in Paris, France.";
-const question = "Where is the Eiffel Tower located?";
-
-const answer = await text.question(question);
-console.log(answer); 
-// Output: "Paris, France"
+const provider = new OpenaiProvider(
+  { apiKey: "sk-..." },
+  "gpt-4o",           // model
+  "Always be concise"  // globalPrompt
+);
 ```
 
-#### 3. Summarizing Text
+## Examples
+
+### Extract Data
+
+Extract structured fields with optional type parsing via `parse`:
 
 ```typescript
-const longText = "This is a long paragraph that needs to be summarized into fewer words for better readability.";
-const summary = await longText.summarise(10);
-console.log(summary); 
-// Output: "This is a long paragraph summarized for readability."
+const text = "John is 30, email: john@example.com";
+const result = await text.extractData([
+  { name: "email", description: "Email address" },
+  { name: "age", description: "Age", parse: Number },
+]);
+// { email: "john@example.com", age: 30 }
+// result.email → string, result.age → number (inferred from parse)
 ```
 
-#### 4. Checking Conditions
+### Summarize
 
 ```typescript
-const content = "The weather today is sunny and warm.";
-const condition = "Is the weather sunny?";
-
-const isSunny = await content.checkIf(condition);
-console.log(isSunny); 
-// Output: true
+const summary = await "A very long article about climate change...".summarise(20);
 ```
 
-#### 5. Translating Text
+### Check Conditions
 
 ```typescript
-const text = "Hello, how are you?";
-const translatedText = await text.translate("spanish");
-console.log(translatedText); 
-// Output: "Hola, ¿cómo estás?"
+const isSunny = await "The weather today is sunny and warm.".checkIf("Is it sunny?");
+// true
 ```
 
-#### 6. Rewriting Text
+### Translate
 
 ```typescript
-const data = "This is some original text.";
-const instructions = "Rewrite this to be more formal.";
-
-const rewritten = await data.rewrite(instructions);
-console.log(rewritten); 
-// Output: "This is some original text rewritten formally."
+const spanish = await "Hello, how are you?".translate("spanish");
+// "Hola, ¿cómo estás?"
 ```
 
-#### 7. Classifying Text
+### Rewrite
 
 ```typescript
-const text = "This is a message about a technical issue.";
-const categories = [
-    { name: "support", description: "Messages related to customer support" },
-    { name: "sales", description: "Messages related to sales inquiries" }
-];
-
-const result = await text.classifyText(categories);
-console.log(result); 
-// Output: "support"
+const formal = await "hey whats up".rewrite("Make it formal");
+// "Hello, how are you doing?"
 ```
 
-## Impact on AI Coding
-
-nextstring simplifies the integration of AI capabilities into your applications by abstracting complex AI interactions into intuitive string methods. This allows developers to:
-
-- Focus on building features rather than implementing AI logic.
-- Leverage AI for natural language processing tasks with minimal effort.
-- Enhance productivity and reduce boilerplate code.
-
-## Sample Scenario: AI-Powered Customer Support
-
-Imagine you're building a customer support chatbot. With nextstring, you can easily extract key information from user messages, answer their questions, summarize lengthy responses, and translate messages for multilingual support.
+### Classify Text
 
 ```typescript
-const userMessage = "Hi, my name is Alice. My order ID is 12345, and I need help with a refund.";
-const items = [
-    { name: "name", description: "The user's name" },
-    { name: "orderID", description: "The order ID mentioned in the message" },
-];
-
-const extractedData = await userMessage.extractData(items);
-console.log(extractedData); 
-// Output: { name: "Alice", orderID: "12345" }
-
-const question = "What does the user need help with?";
-const userNeed = await userMessage.question(question);
-console.log(userNeed); 
-// Output: "a refund"
-
-const translatedMessage = await userMessage.translate("spanish");
-console.log(translatedMessage);
-// Output: "Hola, mi nombre es Alice. Mi ID de pedido es 12345 y necesito ayuda con un reembolso."
+const category = await "My app keeps crashing".classifyText([
+  { name: "support", description: "Technical support issues" },
+  { name: "sales", description: "Sales inquiries" },
+]);
+// "support"
 ```
 
-With just a few lines of code, you can build a robust AI-powered system to handle customer queries efficiently.
+### Fill Templates
+
+```typescript
+const filled = await "Dear {{name}}, your order {{orderId}} is {{status}}.".fill({
+  name: "Alice",
+  order: { id: "ORD-123", shipped: true },
+});
+// "Dear Alice, your order ORD-123 is shipped."
+```
+
+### Generate Content
+
+```typescript
+const content = await "a product description for running shoes".generate();
+
+const email = await "a professional email declining a meeting".generate(
+  "Keep it under 50 words"
+);
+```
+
+### Score Text
+
+Score text against custom rubrics (returns 0-10 for each):
+
+```typescript
+const scores = await "The quick brown fox jumps over the lazy dog.".score([
+  { id: "grammar", name: "Grammar", description: "Correct grammar and punctuation" },
+  { id: "clarity", name: "Clarity", description: "Clear and easy to understand" },
+]);
+// { grammar: 9, clarity: 8 }
+```
+
+### Mask Sensitive Data
+
+Partially redact sensitive information while preserving format:
+
+```typescript
+const masked = await "Contact john@example.com or call 555-123-4567".mask(["email", "phone"]);
+// "Contact j***@e******.com or call ***-***-4567"
+
+const masked2 = await "SSN: 123-45-6789".mask(["ssn"]);
+// "SSN: ***-**-6789"
+```
+
+### Per-Call Model Override
+
+Any method accepts an optional model override as the last argument:
+
+```typescript
+const answer = await "some text".question("What is this?", { model: "gpt-4o" });
+const summary = await "long text".summarise(10, { model: "claude-sonnet-4-20250514" });
+```
+
+## Full Scenario: AI-Powered Customer Support
+
+```typescript
+const message = "Hi, I'm Alice. Order #12345 needs a refund. My email is alice@test.com";
+
+// Extract structured data
+const data = await message.extractData([
+  { name: "name", description: "Customer name" },
+  { name: "orderID", description: "Order ID" },
+  { name: "email", description: "Email address" },
+]);
+// { name: "Alice", orderID: "12345", email: "alice@test.com" }
+
+// Understand intent
+const intent = await message.classifyText([
+  { name: "refund", description: "Refund requests" },
+  { name: "tracking", description: "Order tracking" },
+  { name: "general", description: "General inquiries" },
+]);
+// "refund"
+
+// Mask PII for logging
+const safe = await message.mask(["email", "name"]);
+// "Hi, I'm [NAME]. Order #12345 needs a refund. My email is a****@t***.com"
+
+// Translate for multilingual support
+const spanish = await message.translate("spanish");
+```
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+Contributions are welcome! Please open an issue or submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License.  
+This project is licensed under the MIT License.

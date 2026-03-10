@@ -1,3 +1,4 @@
+import { ModelOptions } from "../providers/provider";
 import { ProviderManager } from "../providers/provider.manager";
 import { Extension } from "./extension";
 
@@ -7,6 +8,7 @@ export class Rewrite extends Extension {
   /**
    * Rewrites the given data based on the provided instructions.
    * @param instructions - The instructions for rewriting the data.
+   * @param options - Optional model options to override the default model.
    * @returns A string containing the rewritten data.
    * @throws Error if the provider is not set or if the rewriting fails.
    * @example
@@ -17,12 +19,13 @@ export class Rewrite extends Extension {
    * console.log(rewritten); // "This is some original text rewritten formally."
    * ```
    */
-  static async handle(instructions: string) {
+  static async handle(instructions: string, options?: ModelOptions) {
     const data = this as any as string;
     const provider = ProviderManager.getProvider();
     const rewrittenData = await provider.getResponseString(
       `Rewrite the following data based on these instructions: ${instructions}. Only return the rewritten data.`,
-      data
+      data,
+      options?.model
     );
     return rewrittenData;
   }

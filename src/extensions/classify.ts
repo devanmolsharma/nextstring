@@ -1,3 +1,4 @@
+import { ModelOptions } from "../providers/provider";
 import { ProviderManager } from "../providers/provider.manager";
 import { Extension } from "./extension";
 
@@ -7,6 +8,7 @@ export class ClassifyText extends Extension {
   /**
    * Classifies the given text into predefined categories based on descriptions.
    * @param categories - An array of objects containing `name` and `description` of the categories.
+   * @param options - Optional model options to override the default model.
    * @returns The name of the category the text belongs to.
    * @throws Error if the provider is not set or if classification fails.
    * @example
@@ -21,7 +23,8 @@ export class ClassifyText extends Extension {
    * ```
    */
   static async handle<T extends string>(
-    categories: { name: T; description: string }[]
+    categories: { name: T; description: string }[],
+    options?: ModelOptions
   ): Promise<T> {
     const text = this as any as string;
     const provider = ProviderManager.getProvider();
@@ -40,7 +43,8 @@ export class ClassifyText extends Extension {
                           "category": "name of the category"
                         }
                         `,
-      text
+      text,
+      options?.model
     );
 
     if (

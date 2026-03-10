@@ -48,7 +48,8 @@ export class OpenaiProvider implements Provider {
   }
   async getResponseString(
     systemPrompt: string,
-    userPrompt: string
+    userPrompt: string,
+    model?: string
   ): Promise<string> {
     const messages: {
       role: "system" | "user" | "assistant";
@@ -61,11 +62,8 @@ export class OpenaiProvider implements Provider {
       messages.unshift({ role: "system", content: this.globalPrompt });
     }
     const response = await this.openai.chat.completions.create({
-      model: this.model,
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt },
-      ],
+      model: model || this.model,
+      messages,
     });
     const message = response.choices[0].message;
     if (message && message.content) {
@@ -75,7 +73,8 @@ export class OpenaiProvider implements Provider {
   }
   async getResponseJson(
     systemPrompt: string,
-    userPrompt: string
+    userPrompt: string,
+    model?: string
   ): Promise<any> {
     const messages: {
       role: "system" | "user" | "assistant";
@@ -88,7 +87,7 @@ export class OpenaiProvider implements Provider {
       messages.unshift({ role: "system", content: this.globalPrompt });
     }
     const response = await this.openai.chat.completions.create({
-      model: this.model,
+      model: model || this.model,
       messages: messages,
       response_format: { type: "json_object" },
     });

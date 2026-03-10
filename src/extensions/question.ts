@@ -1,3 +1,4 @@
+import { ModelOptions } from "../providers/provider";
 import { ProviderManager } from "../providers/provider.manager";
 import { Extension } from "./extension";
 
@@ -7,6 +8,7 @@ export class Question extends Extension {
   /**
    * Answers the given question based on the provided data.
    * @param question - The question to be answered.
+   * @param options - Optional model options to override the default model.
    * @returns A string containing the answer to the question.
    * @throws Error if the provider is not set or if the question answering fails.
    * @example
@@ -17,12 +19,13 @@ export class Question extends Extension {
    * console.log(answer); // "The data is about..."
    * ```
    */
-  static async handle(question: string) {
+  static async handle(question: string, options?: ModelOptions) {
     const data = this as any as string;
     const provider = ProviderManager.getProvider();
     const answer = await provider.getResponseString(
       `Based on the data user provides, answer this question: ${question}, only use the data provided and return only the answer, nothing else`,
-      data
+      data,
+      options?.model
     );
     return answer;
   }

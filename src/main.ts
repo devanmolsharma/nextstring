@@ -19,13 +19,13 @@ for (const key of Object.keys(extensions)) {
 
 export function initialise(
   provider: Provider,
-  override: boolean = false
+  override: boolean = false,
 ): void {
   if (!override) {
     try {
       const currentProvider = ProviderManager.getProvider();
       console.warn(
-        `Provider is already set to ${currentProvider.constructor.name}. Use 'override' option to replace the current provider.`
+        `Provider is already set to ${currentProvider.constructor.name}. Use 'override' option to replace the current provider.`,
       );
       return;
     } catch (e) {
