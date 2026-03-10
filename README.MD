@@ -17,6 +17,7 @@ nextstring is a powerful TypeScript library that extends the native `String` pro
 | `generate(instructions?)` | Use the string as a prompt to generate content |
 | `score(rubrics)` | Score text against rubrics, returns numeric scores |
 | `mask(rules)` | Partially mask sensitive data (emails, phones, SSNs, etc.) |
+| `detectLanguage()` | Detect the language of the given text |
 
 All methods accept an optional `{ model: string }` options object as the last parameter to override the default model per call.
 
@@ -170,6 +171,16 @@ const masked2 = await "SSN: 123-45-6789".mask(["ssn"]);
 // "SSN: ***-**-6789"
 ```
 
+### Detect Language
+
+```typescript
+const lang = await "Bonjour le monde".detectLanguage();
+// "French"
+
+const lang2 = await "こんにちは世界".detectLanguage();
+// "Japanese"
+```
+
 ### Per-Call Model Override
 
 Any method accepts an optional model override as the last argument:
@@ -182,7 +193,11 @@ const summary = await "long text".summarise(10, { model: "claude-sonnet-4-202505
 ## Full Scenario: AI-Powered Customer Support
 
 ```typescript
-const message = "Hi, I'm Alice. Order #12345 needs a refund. My email is alice@test.com";
+const message = "Bonjour, je suis Alice. La commande #12345 doit être remboursée. Mon email est alice@test.com";
+
+// Detect language for routing
+const language = await message.detectLanguage();
+// "French"
 
 // Extract structured data
 const data = await message.extractData([
@@ -192,8 +207,12 @@ const data = await message.extractData([
 ]);
 // { name: "Alice", orderID: "12345", email: "alice@test.com" }
 
+// Translate to English for internal processing
+const english = await message.translate("english");
+// "Hello, I'm Alice. Order #12345 needs a refund. My email is alice@test.com"
+
 // Understand intent
-const intent = await message.classifyText([
+const intent = await english.classifyText([
   { name: "refund", description: "Refund requests" },
   { name: "tracking", description: "Order tracking" },
   { name: "general", description: "General inquiries" },
@@ -201,11 +220,12 @@ const intent = await message.classifyText([
 // "refund"
 
 // Mask PII for logging
-const safe = await message.mask(["email", "name"]);
-// "Hi, I'm [NAME]. Order #12345 needs a refund. My email is a****@t***.com"
+const safe = await english.mask(["email", "name"]);
+// "Hello, I'm [NAME]. Order #12345 needs a refund. My email is a****@t***.com"
 
-// Translate for multilingual support
-const spanish = await message.translate("spanish");
+// Generate a reply and translate back to the customer's language
+const reply = await "a polite refund confirmation for order #12345".generate();
+const localizedReply = await reply.translate(language);
 ```
 
 ## Contributing
